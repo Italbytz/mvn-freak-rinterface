@@ -249,16 +249,28 @@ public class ScheduleConfigurator {
             }
             if (graphs != null) {
                 try {
-                    OperatorGraphFile ogFile;
+                    OperatorGraphFile ogFile = null;
 
-                    String startedFrom = ClassCollector.getStartedFrom();
+                    String[] classpaths = ClassCollector.getClassPaths();
+
+                    for (String path:classpaths) {
+                        if (path.contains("freak-core-graph")) {
+                            JarFile jf = new JarFile(path);
+                            ogFile = OperatorGraphFile.read(jf.getInputStream(jf.getJarEntry(graphs[0].getClassName())));
+                        }
+                    }
+
+                   /* String startedFrom = ClassCollector.getStartedFrom();
                     // NEW CHECK
                     if (graphs[0].getClassName().startsWith("freak") && startedFrom.toLowerCase().endsWith(".jar")) {
                         JarFile jf = new JarFile(startedFrom);
                         ogFile = OperatorGraphFile.read(jf.getInputStream(jf.getJarEntry(graphs[0].getClassName())));
                     } else {
                         ogFile = OperatorGraphFile.read(new FileInputStream(new File(graphs[0].getClassName())));
-                    }
+                    }*/
+
+                    if (ogFile==null) throw new RuntimeException("Error loading graph " + graphs[0].getClassName());
+
                     FreakGraphModel model = ogFile.generateGraph(schedule);
                     model.getOperatorGraph().setName(graphs[0].getName());
 

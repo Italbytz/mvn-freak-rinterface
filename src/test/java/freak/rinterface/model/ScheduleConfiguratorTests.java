@@ -1,6 +1,8 @@
 package freak.rinterface.model;
 
+import freak.core.control.ScheduleInterface;
 import freak.module.searchspace.PointSet;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class ScheduleConfiguratorTests {
@@ -11,6 +13,7 @@ public class ScheduleConfiguratorTests {
         int[] dim = {21, 4};
         RDoubleMatrix stackloss = new RDoubleMatrix(values, dim);
         PointSet.setPointsSetFromR(true);
-        ScheduleConfigurator.getLTSSchedule(stackloss, 0, false, 1, 10000, 0, 0);
+        ScheduleInterface schedule = ScheduleConfigurator.getLTSSchedule(stackloss, 0, false, 1, 10000, 0, 0);
+        Assertions.assertNotNull(schedule);
     }
 }
