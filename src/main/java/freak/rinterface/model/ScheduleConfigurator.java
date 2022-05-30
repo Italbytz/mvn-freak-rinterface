@@ -17,6 +17,7 @@ import freak.core.mapper.Mapper;
 import freak.core.modulesupport.*;
 import freak.core.observer.Observer;
 import freak.core.observer.ObserverManagerInterface;
+import freak.core.observer.ObserverViewMismatchException;
 import freak.core.populationmanager.PopulationManager;
 import freak.core.searchspace.SearchSpace;
 import freak.core.stoppingcriterion.StoppingCriterion;
@@ -295,13 +296,13 @@ public class ScheduleConfigurator {
             m = new ResultObserver(schedule);
 
             //View
-            /*freak.module.view.RReturn rReturn = new freak.module.view.RReturn(schedule);
+            freak.module.view.RReturn rReturn = new freak.module.view.RReturn(schedule);
             try {
                 ((Observer) m).addView(rReturn);
             } catch (ObserverViewMismatchException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
-            }*/
+            }
             m.initialize();
             m.createEvents();
             om.addObserver((Observer) m);
