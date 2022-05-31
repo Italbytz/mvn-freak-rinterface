@@ -16,18 +16,24 @@ import freak.core.graph.Initialization;
 import freak.core.mapper.Mapper;
 import freak.core.modulesupport.*;
 import freak.core.observer.Observer;
+import freak.core.observer.ObserverManager;
 import freak.core.observer.ObserverManagerInterface;
 import freak.core.observer.ObserverViewMismatchException;
 import freak.core.populationmanager.PopulationManager;
 import freak.core.searchspace.SearchSpace;
 import freak.core.stoppingcriterion.StoppingCriterion;
 import freak.gui.graph.OperatorGraphFile;
+import freak.module.fitness.booleanfunction.GenericPareto;
 import freak.module.fitness.pointset.*;
 import freak.module.observer.ResultObserver;
 import freak.module.operator.initialization.LTSInitialization;
+import freak.module.postprocessor.booleanfunction.Count;
+import freak.module.searchspace.BooleanFunction;
 import freak.module.searchspace.PointSet;
 import freak.module.stoppingcriterion.Duration;
 import freak.module.stoppingcriterion.GenerationCount;
+import freak.module.stoppingcriterion.NoNewIndividualForManyGenerations;
+import freak.module.stoppingcriterion.PredictingModelFound;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -319,6 +325,204 @@ public class ScheduleConfigurator {
         return schedule;
     }
 
+    public static Schedule createSchedule(String path, int runs, int generationCountStop) {
+        return createSchedule(path, runs, generationCountStop, false);
+    }
+
+    public static Schedule createSchedule(String path, int runs, int generationCountStop, boolean stoppingCriterion) {
+        return createSchedule(path, runs, generationCountStop, false, "GPASGraph.fop");
+    }
+
+    public static Schedule createSchedule(String path, int runs, int generationCountStop, boolean stoppingCriterion,
+                                          String graphFile) {
+
+        Schedule schedule = new Schedule();
+
+        /*ScheduleDependencyChecker scheduleDependencyChecker = new ScheduleDependencyChecker(null);
+        scheduleDependencyChecker.setSchedule(schedule);*/
+
+        Module m;
+        try {
+            // Suchraum
+            m = new freak.module.searchspace.BooleanFunction(schedule);
+            ((BooleanFunction) m).setPropertyInputPath(path);
+            m.testSchedule(schedule);
+            m.initialize();
+            m.createEvents();
+            schedule.setPhenotypeSearchSpace((SearchSpace) m);
+
+            // Fitnessfunktion
+            m = new freak.module.fitness.booleanfunction.GenericPareto(schedule);
+            m.testSchedule(schedule);
+            m.initialize();
+            m.createEvents();
+            schedule.setFitnessFunction((FitnessFunction) m);
+
+            // Stoppkriterium
+            if ((generationCountStop > 0) || (stoppingCriterion)) {
+                NoNewIndividualForManyGenerations generationCount = new NoNewIndividualForManyGenerations(schedule);
+                generationCount.setPropertyGenerations(new Integer(generationCountStop));
+                //
+                //				GenerationCount generationCount = new GenerationCount(schedule);
+                //				generationCount.setPropertyCount(new Integer(generationCountStop));
+                generationCount.testSchedule(schedule);
+                generationCount.initialize();
+
+                PredictingModelFound predictionFound = new PredictingModelFound(schedule);
+                predictionFound.testSchedule(schedule);
+                predictionFound.initialize();
+
+                StoppingCriterion[] stoppingCriteria = null;
+                if ((generationCountStop > 0) && (stoppingCriterion)) {
+                    stoppingCriteria = new StoppingCriterion[2];
+                    stoppingCriteria[0] = generationCount;
+                    generationCount.createEvents();
+                    stoppingCriteria[1] = predictionFound;
+                    predictionFound.createEvents();
+
+                } else if (generationCountStop > 0) {
+                    stoppingCriteria = new StoppingCriterion[1];
+                    stoppingCriteria[0] = generationCount;
+                    generationCount.createEvents();
+                } else {
+                    stoppingCriteria = new StoppingCriterion[1];
+                    stoppingCriteria[0] = predictionFound;
+                    predictionFound.createEvents();
+                }
+                schedule.setStoppingCriteria(stoppingCriteria);
+            }
+            // Populationmanager
+            m = new freak.module.populationmanager.DefaultPopulationManager(schedule);
+            m.testSchedule(schedule);
+            m.initialize();
+            m.createEvents();
+            schedule.setPopulationManager((PopulationManager) m);
+
+            // Operatorgraph
+            OperatorGraphCollector collector = new OperatorGraphCollector(schedule);
+
+            ModuleInfo[] graphs = collector.getPredefinedGraphs(graphFile);
+            if (graphs != null) {
+                try {
+
+                    OperatorGraphFile ogFile = null;
+
+                    String[] classpaths = ClassCollector.getClassPaths();
+
+                    for (String jpath:classpaths) {
+                        if (jpath.contains("freak-core-graph")) {
+                            JarFile jf = new JarFile(jpath);
+                            ogFile = OperatorGraphFile.read(jf.getInputStream(jf.getJarEntry(graphs[0].getClassName())));
+                        }
+                    }
+
+/*
+                    OperatorGraphFile ogFile;
+
+                    String startedFrom = ClassCollector.getStartedFrom();
+                    // NEW CHECK
+                    if (graphs[0].getClassName().startsWith("freak") && startedFrom.toLowerCase().endsWith(".jar")) {
+                        JarFile jf = new JarFile(startedFrom);
+                        ogFile = OperatorGraphFile.read(jf.getInputStream(jf.getJarEntry(graphs[0].getClassName())));
+                    } else {
+                        ogFile = OperatorGraphFile.read(new FileInputStream(new File(graphs[0].getClassName())));
+                    }*/
+
+                    FreakGraphModel model = ogFile.generateGraph(schedule);
+                    model.getOperatorGraph().setName(graphs[0].getName());
+
+                    schedule.setGraphModel(model);
+
+                } catch (Exception exc) {
+                    System.out.println("Error loading graph " + graphs[0].getClassName());
+                    exc.printStackTrace();
+                }
+            }
+
+            // Initialisierung
+            m = new freak.module.operator.initialization.RandomInitialization(schedule.getOperatorGraph());
+            m.testSchedule(schedule);
+            m.initialize();
+            m.createEvents();
+            schedule.setInitialization((Initialization) m);
+        } catch (UnsupportedEnvironmentException e) {
+            throw new RuntimeException("Something is wrong with the default Schedule.", e);
+        }
+
+        updateBatchForSchedule(schedule, runs);
+
+        // Update signalisieren (hat nur Auswirkungen auf den Operatorgraph)
+        schedule.modulesEdited();
+
+        currentSchedule = schedule; //the static attribute is set for further editing
+        return schedule; //as well as the schedule we just created is return to the caller (ie. R)
+        //for the case that no further editing is planned
+
+    }
+
+    public static void setInteractionR(int runs, int generations, String graphFile, int occurences, double ratio) {
+        setInteraction("ignored", runs, generations, graphFile, occurences, ratio, "");
+    }
+
+    public static void setInteraction(String path, int runs, int generations, String graphFile, int occurences,
+                                      double ratio, String saveTo) {
+        createSchedule(path, runs, generations);
+        Module m;
+        try {
+            currentSchedule.setFitnessFunction(null);
+            // Fitnessfunktion
+            m = new GenericPareto(currentSchedule);
+            ((GenericPareto) m).setParetoObjective(new int[] { GenericPareto.OBJECTIVE_CASESCONTROLS,
+                    GenericPareto.OBJECTIVE_CONTROLS, GenericPareto.OBJECTIVE_LENGTH });
+            ((GenericPareto) m).setPropertySubsets(new Integer(1));
+            ((GenericPareto) m).setPropertySizePruning(new Integer(12));
+            m.testSchedule(currentSchedule);
+            m.initialize();
+            m.createEvents();
+            currentSchedule.setFitnessFunction((FitnessFunction) m);
+        } catch (UnsupportedEnvironmentException e) {
+            throw new RuntimeException("Something is wrong with the default Schedule.", e);
+        }
+
+        // Observer, View and Postprocessor
+        ObserverManagerInterface om = currentSchedule.getObserverManager();
+        m = new ResultObserver(currentSchedule);
+        ((ResultObserver) m).setPropertyTestData("");
+        //View
+        if (saveTo.trim().equals("")) {
+            freak.module.view.RReturn rReturn = new freak.module.view.RReturn(currentSchedule);
+            try {
+                ((Observer) m).addView(rReturn);
+            } catch (ObserverViewMismatchException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+        } else {
+/*            freak.module.view.FileWriter output = new freak.module.view.FileWriter(currentSchedule);
+            output.setPropertyFile(new File(saveTo));
+            try {
+                ((Observer) m).addView(output);
+            } catch (ObserverViewMismatchException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }*/
+
+        }
+        //Postprocessor
+        ((ResultObserver) m).setPostprocessor(-1);
+        ((ResultObserver) m).setSelectPostprocessorFromGui(false);
+        Count postprocessor = new Count(currentSchedule);
+        Count.fileName = graphFile;
+        Count.minCount = occurences;
+        Count.minPercent = ratio;
+        ((ResultObserver) m).setSelectedProcessor(postprocessor);
+        m.initialize();
+        m.createEvents();
+        om.addObserver((Observer) m);
+
+        updateBatchForSchedule(currentSchedule, runs);
+    }
 
     /**
      * @return the editingFinished

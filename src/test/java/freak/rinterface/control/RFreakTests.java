@@ -1,7 +1,11 @@
 package freak.rinterface.control;
 
+import freak.core.control.Schedule;
 import freak.core.control.ScheduleInterface;
 import freak.module.searchspace.PointSet;
+import freak.module.searchspace.logictree.DNFTree;
+import freak.module.searchspace.logictree.Data;
+import freak.module.searchspace.logictree.RData;
 import freak.rinterface.model.RDoubleMatrix;
 import freak.rinterface.model.RReturns;
 import freak.rinterface.model.SDataFrame;
@@ -36,5 +40,23 @@ public class RFreakTests {
         Assertions.assertNotNull(crit);
         Assertions.assertNotNull(coefficients);
         Assertions.assertNotNull(best);
+    }
+
+    @Test
+    public void testGPASInteractions() throws Exception {
+        int[] preds = { 1, 1, 0, 1, 0, 1, 0, 0, 0, 1, 1, 2, 2, 0, 1, 2, 2, 0, 1, 1, 2, 0, 2, 2, 0, 2, 0, 2, 1, 2, 1, 1, 0, 1, 0, 1, 2, 0, 1, 2, 0, 0, 0, 2, 0, 2, 1, 1, 1, 1, 0, 0, 0, 2, 2, 1, 2, 0, 0, 2, 1, 1, 1, 2, 1, 0, 2, 1, 2, 0, 0, 0, 2, 0, 2, 0, 2, 0, 0, 1, 1, 0, 1, 2, 2, 2, 0, 1, 0, 2, 1, 0, 1, 2, 0, 2, 1, 0, 2, 1, 1, 1, 1, 0, 2, 2, 0, 0, 2, 1};
+        int[] dim = {10, 11};
+        String[] columnNames = {"FK", "SNP1", "SNP2", "SNP3", "SNP4", "SNP5", "SNP6", "SNP7", "SNP8", "SNP9", "SNP10"};
+        RData trainingData = new RData(preds,dim, columnNames);
+        Data.setTrainingData(trainingData);
+        Data.setRData(trainingData);
+        Data.setRMode();
+        ScheduleConfigurator.setInteractionR(1,1000,"test.dot",10,0.1);
+        ScheduleInterface schedule = ScheduleConfigurator.getCurrentSchedule();
+        LogRegInterface.rSetSchedule(schedule);
+        RFreak.rMain();
+        SDataFrame returnedFrame = RReturns.getDataFrame();
+        DNFTree[] returnedTrees = RReturns.getAllTrees();
+        Data.clear();
     }
 }
