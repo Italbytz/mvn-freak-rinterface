@@ -524,6 +524,93 @@ public class ScheduleConfigurator {
         updateBatchForSchedule(currentSchedule, runs);
     }
 
+    public static void setDiscriminationR(int runs, int generations) {
+        setDiscriminationR(runs, generations, 12);
+    }
+
+    public static void setDiscriminationR(int runs, int generations, String graphFile) {
+        setDiscriminationR(runs, generations, 12, false, graphFile);
+    }
+
+    public static void setDiscriminationR(int runs, int generations, int sizePruning) {
+        setDiscriminationR(runs, generations, sizePruning, false);
+    }
+
+    public static void setDiscriminationR(int runs, int generations, int sizePruning, boolean stoppingCriterion) {
+        setDiscriminationR(runs, generations, sizePruning, stoppingCriterion, "GPASGraph.fop");
+    }
+
+    public static void setDiscriminationR(int runs, int generations, int sizePruning, boolean stoppingCriterion,
+                                          String graphFile) {
+        setDiscrimination("ignored", runs, generations, "ignored", "", sizePruning, stoppingCriterion, graphFile);
+    }
+
+    // called from "Quick Start GPAS"
+    public static void setDiscrimination(String path, int runs, int generations, String testDataPath, String saveTo) {
+        setDiscrimination(path, runs, generations, testDataPath, saveTo, 12);
+    }
+
+    public static void setDiscrimination(String path, int runs, int generations, String testDataPath, String saveTo,
+                                         int sizePruning) {
+        setDiscrimination(path, runs, generations, testDataPath, saveTo, sizePruning, false);
+    }
+
+    public static void setDiscrimination(String path, int runs, int generations, String testDataPath, String saveTo,
+                                         int sizePruning, boolean stoppingCriterion) {
+        setDiscrimination(path, runs, generations, testDataPath, saveTo, sizePruning, false, "GPASGraph.fop");
+    }
+
+    public static void setDiscrimination(String path, int runs, int generations, String testDataPath, String saveTo,
+                                         int sizePruning, boolean stoppingCriterion, String graphFile) {
+        createSchedule(path, runs, generations, stoppingCriterion, graphFile);
+        Module m;
+        try {
+            currentSchedule.setFitnessFunction(null);
+            // Fitnessfunktion
+            m = new GenericPareto(currentSchedule);
+            ((GenericPareto) m).setParetoObjective(new int[] { GenericPareto.OBJECTIVE_CASES,
+                    GenericPareto.OBJECTIVE_CONTROLS, GenericPareto.OBJECTIVE_LENGTH });
+            ((GenericPareto) m).setPropertySubsets(new Integer(1));
+            ((GenericPareto) m).setPropertySizePruning(new Integer(sizePruning));
+            m.testSchedule(currentSchedule);
+            m.initialize();
+            m.createEvents();
+            currentSchedule.setFitnessFunction((FitnessFunction) m);
+        } catch (UnsupportedEnvironmentException e) {
+            throw new RuntimeException("Something is wrong with the default Schedule.", e);
+        }
+        // Observer, View and Postprocessor
+        ObserverManagerInterface om = currentSchedule.getObserverManager();
+        m = new ResultObserver(currentSchedule);
+        ((ResultObserver) m).setPropertyTestData(testDataPath);
+        //View
+        if (saveTo.trim().equals("")) {
+            freak.module.view.RReturn rReturn = new freak.module.view.RReturn(currentSchedule);
+            try {
+                ((Observer) m).addView(rReturn);
+            } catch (ObserverViewMismatchException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+        } else {
+            /*freak.module.view.FileWriter output = new freak.module.view.FileWriter(currentSchedule);
+            output.setPropertyFile(new File(saveTo));
+            try {
+                ((Observer) m).addView(output);
+            } catch (ObserverViewMismatchException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }*/
+
+        }
+        m.initialize();
+        m.createEvents();
+        om.addObserver((Observer) m);
+
+        updateBatchForSchedule(currentSchedule, runs);
+    }
+
     /**
      * @return the editingFinished
      */
