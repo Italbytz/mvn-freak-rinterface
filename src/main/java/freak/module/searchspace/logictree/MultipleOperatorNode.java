@@ -98,7 +98,7 @@ public abstract class MultipleOperatorNode implements OperatorNode, Serializable
 	
 	/**
 	 * Returns wheter the <code>OperatorNode on</code> is a child of this MultipleOperatorNode.
-	 * @param <code>on</code> <code>OperatorNode</code> that we look for in the children list
+	 * @param on <code>OperatorNode</code> that we look for in the children list
 	 * @return true, if <code>on</code> is a child of this node
 	 */
 	public boolean contains(OperatorNode on){
@@ -172,7 +172,6 @@ public abstract class MultipleOperatorNode implements OperatorNode, Serializable
 
 	/**
 	 * @return  the children
-	 * @uml.property  name="children"
 	 */
 	public OperatorNodeVector getChildren() {
 		return children;

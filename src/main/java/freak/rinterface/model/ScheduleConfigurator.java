@@ -267,14 +267,19 @@ public class ScheduleConfigurator {
                         }
                     }
 
-                   /* String startedFrom = ClassCollector.getStartedFrom();
-                    // NEW CHECK
-                    if (graphs[0].getClassName().startsWith("freak") && startedFrom.toLowerCase().endsWith(".jar")) {
-                        JarFile jf = new JarFile(startedFrom);
-                        ogFile = OperatorGraphFile.read(jf.getInputStream(jf.getJarEntry(graphs[0].getClassName())));
-                    } else {
-                        ogFile = OperatorGraphFile.read(new FileInputStream(new File(graphs[0].getClassName())));
-                    }*/
+                    if (ogFile==null) {
+                        String startedFrom = ClassCollector.getStartedFrom();
+                        // NEW CHECK
+                        if (graphs[0].getClassName().startsWith("freak") &&
+                                startedFrom.toLowerCase().endsWith(".jar")) {
+                            JarFile jf = new JarFile(startedFrom);
+                            ogFile = OperatorGraphFile.read(jf.getInputStream(
+                                    jf.getJarEntry(graphs[0].getClassName())));
+                        } else {
+                            ogFile = OperatorGraphFile.read(new FileInputStream(
+                                    new File(graphs[0].getClassName())));
+                        }
+                    }
 
                     if (ogFile==null) throw new RuntimeException("Error loading graph " + graphs[0].getClassName());
 
@@ -416,17 +421,18 @@ public class ScheduleConfigurator {
                         }
                     }
 
-/*
-                    OperatorGraphFile ogFile;
+                    if (ogFile==null) {
+                        String startedFrom = ClassCollector.getStartedFrom();
+                        // NEW CHECK
+                        if (graphs[0].getClassName().startsWith("freak") && startedFrom.toLowerCase().endsWith(".jar")) {
+                            JarFile jf = new JarFile(startedFrom);
+                            ogFile = OperatorGraphFile.read(jf.getInputStream(jf.getJarEntry(graphs[0].getClassName())));
+                        } else {
+                            ogFile = OperatorGraphFile.read(new FileInputStream(new File(graphs[0].getClassName())));
+                        }
+                    }
 
-                    String startedFrom = ClassCollector.getStartedFrom();
-                    // NEW CHECK
-                    if (graphs[0].getClassName().startsWith("freak") && startedFrom.toLowerCase().endsWith(".jar")) {
-                        JarFile jf = new JarFile(startedFrom);
-                        ogFile = OperatorGraphFile.read(jf.getInputStream(jf.getJarEntry(graphs[0].getClassName())));
-                    } else {
-                        ogFile = OperatorGraphFile.read(new FileInputStream(new File(graphs[0].getClassName())));
-                    }*/
+                    if (ogFile==null) throw new RuntimeException("Error loading graph " + graphs[0].getClassName());
 
                     FreakGraphModel model = ogFile.generateGraph(schedule);
                     model.getOperatorGraph().setName(graphs[0].getName());

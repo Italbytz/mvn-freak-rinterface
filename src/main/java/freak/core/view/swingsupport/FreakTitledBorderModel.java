@@ -32,7 +32,6 @@ public class FreakTitledBorderModel implements FreakSwingModel {
 
 	/**
 	 * @param title  the title to set
-	 * @uml.property  name="title"
 	 */
 	public void setTitle(String title) {
 		this.title = title;

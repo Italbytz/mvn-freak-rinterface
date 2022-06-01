@@ -92,7 +92,6 @@ public class Data implements Serializable{
 	
 	/**
 	 * Gives the number of rows in the input table.	  Returns -1 if no data is present.
-	 * @uml.property  name="numRows"
 	 */
 	public static int getNumRows(){
 		if (read) return numRows; else return -1;
@@ -100,7 +99,6 @@ public class Data implements Serializable{
 	
 	/**
 	 * Gives the number of rows in the input table where function value is 1. Returns -1 if no data is present.
-	 * @uml.property  name="num1Rows"
 	 */
 	public static int getNum1Rows(){
 		if (read) return num1Rows; else return -1;		
@@ -143,7 +141,6 @@ public class Data implements Serializable{
 	/**
 	 * Gives the maximum Value of an input variable.
 	 * Returns -1 if no data is present or var is out of range.
-	 * @var number of input variable
 	 */
 	public static int getMaxValue(int var){		
 		if (read && var < numVars){
@@ -154,7 +151,6 @@ public class Data implements Serializable{
 	/**
 	 * Gives the minimum Value of an input variable.
 	 * Returns -1 if no data is present or var is out of range.
-	 * @var number of input variable
 	 */
 	public static int getMinValue(int var){		
 		if (read && var < numVars){
@@ -291,7 +287,6 @@ public class Data implements Serializable{
 	
 	/**
 	 * Gives a OperatorNodeVector with all possible compare-Subtrees due to the actual data. Returns null if no data is present.
-	 * @uml.property  name="compareSubtrees"
 	 */
 	public static OperatorNodeVector getCompareSubtrees(){
 		if (read) return compareSubtrees; else return null;

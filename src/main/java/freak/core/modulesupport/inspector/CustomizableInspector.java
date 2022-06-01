@@ -27,7 +27,7 @@ public class CustomizableInspector extends Inspector {
 	 * Constructs a new <code>Inspector</code> with the specified table.
 	 * 
 	 * @param table the table used by the inspector to render and edit the inspected data.
-	 * @param the module the inspector works on.
+	 * @param module module the inspector works on.
 	 */
 	public CustomizableInspector(CustomizableInspectorTable table, Module module) {
 		super(module);
@@ -50,7 +50,6 @@ public class CustomizableInspector extends Inspector {
 
 	/**
 	 * @return  the table which is placed in the inspector.
-	 * @uml.property  name="table"
 	 */
 	public CustomizableInspectorTable getTable() {
 		return table;

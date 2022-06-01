@@ -59,7 +59,6 @@ public class FreakLargeTableModel implements FreakTableModel {
 
 	/**
 	 * @return  the columnNames
-	 * @uml.property  name="columnNames"
 	 */
 	public String[] getColumnNames() {
 		return columnNames;
@@ -67,7 +66,6 @@ public class FreakLargeTableModel implements FreakTableModel {
 
 	/**
 	 * @param columnNames  the columnNames to set
-	 * @uml.property  name="columnNames"
 	 */
 	public void setColumnNames(String[] columnNames) {
 		this.columnNames = columnNames;
@@ -76,16 +74,11 @@ public class FreakLargeTableModel implements FreakTableModel {
 
 	/**
 	 * @return  the defaultValue
-	 * @uml.property  name="defaultValue"
 	 */
 	public Object getDefaultValue() {
 		return defaultValue;
 	}
 
-	/**
-	 * @param defaultValue  the defaultValue to set
-	 * @uml.property  name="defaultValue"
-	 */
 	public void setDefaultValue(Object object) {
 		defaultValue = object;
 	}

@@ -173,7 +173,6 @@ public class ResultObserver extends AbstractObserver implements RunEventListener
 
         /**
          * @return  the numberOfGenerations
-         * @uml.property  name="numberOfGenerations"
          */
         public int getNumberOfGenerations() {
             return numberOfGenerations;
@@ -181,7 +180,6 @@ public class ResultObserver extends AbstractObserver implements RunEventListener
 
         /**
          * @param i  the numberOfGenerations to set
-         * @uml.property  name="numberOfGenerations"
          */
         public void setNumberOfGenerations(int i) {
             numberOfGenerations = i;
@@ -189,7 +187,6 @@ public class ResultObserver extends AbstractObserver implements RunEventListener
 
         /**
          * @return  the bestIndividuals
-         * @uml.property  name="bestIndividuals"
          */
         public IndividualList getBestIndividuals() {
             return bestIndividuals;
@@ -197,7 +194,6 @@ public class ResultObserver extends AbstractObserver implements RunEventListener
 
         /**
          * @param individuals  the bestIndividuals to set
-         * @uml.property  name="bestIndividuals"
          */
         public void setBestIndividuals(IndividualList individuals) {
             bestIndividuals = individuals;
@@ -370,7 +366,6 @@ public class ResultObserver extends AbstractObserver implements RunEventListener
 
         /**
          * @return  the runNumber
-         * @uml.property  name="runNumber"
          */
         public int getRunNumber() {
             return runNumber;
@@ -378,7 +373,6 @@ public class ResultObserver extends AbstractObserver implements RunEventListener
 
         /**
          * @param i  the runNumber to set
-         * @uml.property  name="runNumber"
          */
         public void setRunNumber(int i) {
             runNumber = i;

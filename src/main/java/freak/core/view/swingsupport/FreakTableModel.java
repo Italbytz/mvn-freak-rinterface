@@ -41,24 +41,20 @@ public interface FreakTableModel extends FreakSwingModel {
 
 	/**
 	 * Sets the column header. The visible table size is adapted to the length of the array, but rows are not actually cropped nor extended. The array may not be changed after this call.
-	 * @uml.property  name="columnNames"
 	 */
 	public abstract void setColumnNames(String[] columnNames);
 	/**
 	 * @return
-	 * @uml.property  name="columnNames"
 	 */
 	public String[] getColumnNames();
 	public int getColumnCount();
 
 	/**
 	 * Sets the value, that will be shown, if rows do not contain data for all columns. The rows are not actually changed. The object may not be changed after this call.
-	 * @uml.property  name="defaultValue"
 	 */
 	public abstract void setDefaultValue(Object defaultValue);
 	/**
 	 * @return
-	 * @uml.property  name="defaultValue"
 	 */
 	public Object getDefaultValue();
 

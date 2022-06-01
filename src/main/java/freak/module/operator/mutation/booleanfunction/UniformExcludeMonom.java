@@ -5,7 +5,7 @@
  */
 
 
-// TODO LŠdt bei jedem Aufruf die Daten neu!!!!
+// TODO LÃ¤dt bei jedem Aufruf die Daten neu!!!!
 
 package freak.module.operator.mutation.booleanfunction;
 

@@ -48,7 +48,6 @@ public abstract class AbstractView extends AbstractModule implements View {
 
 	/**
 	 * @return  the identificationNumber
-	 * @uml.property  name="identificationNumber"
 	 */
 	public int getIdentificationNumber() {
 		return identificationNumber;
@@ -56,7 +55,6 @@ public abstract class AbstractView extends AbstractModule implements View {
 
 	/**
 	 * @return  the observer
-	 * @uml.property  name="observer"
 	 */
 	public Observer getObserver() {
 		return observer;
@@ -64,7 +62,6 @@ public abstract class AbstractView extends AbstractModule implements View {
 
 	/**
 	 * @param observer  the observer to set
-	 * @uml.property  name="observer"
 	 */
 	public void setObserver(Observer observer) {
 		this.observer = observer;

@@ -38,7 +38,6 @@ public class FreakSpinnerModel implements FreakSwingModel {
 
 	/**
 	 * Sets the current value. Maximum and minimum are not adapted automatically.
-	 * @uml.property  name="value"
 	 */
 	public void setValue(int value) {
 		this.value = value;
@@ -46,7 +45,6 @@ public class FreakSpinnerModel implements FreakSwingModel {
 
 	/**
 	 * Sets the minimal value that will be accepted as user inpud. Value and maximum are not adapted automatically.
-	 * @uml.property  name="minimum"
 	 */
 	public void setMinimum(int minimum) {
 		this.minimum = minimum;
@@ -54,7 +52,6 @@ public class FreakSpinnerModel implements FreakSwingModel {
 
 	/**
 	 * Sets the maximal value that will be accepted as user inpud. Value and maximum are not adapted automatically.
-	 * @uml.property  name="maximum"
 	 */
 	public void setMaximum(int maximum) {
 		this.maximum = maximum;
@@ -62,7 +59,6 @@ public class FreakSpinnerModel implements FreakSwingModel {
 
 	/**
 	 * @return  the programmaticalChange
-	 * @uml.property  name="programmaticalChange"
 	 */
 	public boolean isProgrammaticalChange() {
 		return programmaticalChange;

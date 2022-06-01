@@ -19,7 +19,7 @@ public class VariableConstantNode implements AtomicNode, Serializable{
 
 	/**
 	 * Creates a new constantNode with a random value between 1 and MaxValue (inclusively).
-	 * If maxValue is <= 0, 3 is used as maxValue.
+	 * If maxValue is less than or equal to 0, 3 is used as maxValue.
 	 * @param maxValue maximum value for the random constant value of this node
 	 */
 	public VariableConstantNode(int maxValue){
@@ -33,9 +33,9 @@ public class VariableConstantNode implements AtomicNode, Serializable{
 	
 	/**
 	 * Creates a new constantNode with Value value and value range 1..maxValue (inclusively).
-	 * If maxValue is <= 0, 3 is used as maxValue.
+	 * If maxValue is less than or equal to 0, 3 is used as maxValue.
 	 * @param maxValue maximum value for the constant value of this node
-	 * @value value Value to be set, will be ignored and replaced by random value if greater than maxValue
+	 * @param value Value to be set, will be ignored and replaced by random value if greater than maxValue
 	 */
 	public VariableConstantNode(int maxValue, int value){
 		if (maxValue>0) {
@@ -52,7 +52,6 @@ public class VariableConstantNode implements AtomicNode, Serializable{
 	
 	/**
 	 * Returns the constant value of this node.
-	 * @uml.property  name="value"
 	 */
 	public int getValue(){
 		return value;
@@ -69,7 +68,6 @@ public class VariableConstantNode implements AtomicNode, Serializable{
 	/**
 	 * Sets the constant value of this ConstantNode to val. Maximum value can be set in another function.
 	 * @param val  wanted value, must be in range 1 .. maxValue.
-	 * @uml.property  name="value"
 	 */
 	void setValue(int val){
 		if (val > 0 && val <= maxValue) value = val;
@@ -78,7 +76,6 @@ public class VariableConstantNode implements AtomicNode, Serializable{
 	/**
 	 * Sets the maximum value for this constant node.
 	 * @param  maxValue, must be > 0.
-	 * @uml.property  name="maxValue"
 	 */
 	void setMaxValue(int maxValue){
 		if (maxValue > 0) this.maxValue = maxValue;

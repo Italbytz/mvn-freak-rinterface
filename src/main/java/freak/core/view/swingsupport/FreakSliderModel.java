@@ -38,7 +38,6 @@ public class FreakSliderModel implements FreakSwingModel {
 
 	/**
 	 * Sets the position of the knob. Maximum and minimum are not adapted automatically.
-	 * @uml.property  name="value"
 	 */
 	public void setValue(int value) {
 		this.value = value;
@@ -46,7 +45,6 @@ public class FreakSliderModel implements FreakSwingModel {
 
 	/**
 	 * Sets the value of the left border. Value and maximum are not adapted automatically.
-	 * @uml.property  name="minimum"
 	 */
 	public void setMinimum(int minimum) {
 		this.minimum = minimum;
@@ -54,7 +52,6 @@ public class FreakSliderModel implements FreakSwingModel {
 
    /**
  * Sets the value of the right border. Value and minimum are not adapted automatically.
- * @uml.property  name="maximum"
  */
 	public void setMaximum(int maximum) {
 		this.maximum = maximum;
@@ -62,15 +59,13 @@ public class FreakSliderModel implements FreakSwingModel {
 	
 	/**
 	 * @return  the programmaticalChange
-	 * @uml.property  name="programmaticalChange"
 	 */
 	public boolean isProgrammaticalChange() {
 		return programmaticalChange;
 	}
 	
 	/**
-	 * @param autoTicks  the autoTicks to set
-	 * @uml.property  name="autoTicks"
+	 * @param b  the autoTicks to set
 	 */
 	public void setAutoTicks(boolean b) {
 		autoTicks = b;

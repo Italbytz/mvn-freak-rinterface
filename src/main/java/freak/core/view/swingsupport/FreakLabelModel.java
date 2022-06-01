@@ -32,7 +32,6 @@ public class FreakLabelModel implements FreakSwingModel {
 
 	/**
 	 * @param text  the text to set
-	 * @uml.property  name="text"
 	 */
 	public void setText(String text) {
 		this.text = text;

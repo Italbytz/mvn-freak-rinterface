@@ -61,7 +61,6 @@ public class DNFTree implements Serializable {
 	 * @param count short-array that contains how often each line of the input table is fullfilled by the tree
 	 * @param xyRange maximum value input variables can have
 	 * @param maxPercent Probability that a andNode is deleted instead of a compareNode (in the deleting operator)
-	 * @parma andORCompare Probability that a andNode is created instead of a compareNode (in the creating operator) 
 	 **/
 	public DNFTree(short[] count, short noFulfilledLines, short noFulfilled1Lines, OrNode o, int xyRange, int maxPercent, //int opDelValue, int andORCompare, 
 			boolean emptyAndsForbidden, boolean emptyTreeForbidden, String inputFilePath, ScheduleInterface schedule, int population, boolean neuLaden) {
@@ -329,7 +328,6 @@ public class DNFTree implements Serializable {
 	
 	/**
 	 * Gives the root of this DNFTree.
-	 * @uml.property  name="root"
 	 */
 	// f�r die equals methode
 	public MultipleOperatorNode getRoot(){
@@ -338,7 +336,6 @@ public class DNFTree implements Serializable {
 	
 	/**
 	 * Gives the number of the population this tree is in.
-	 * @uml.property  name="population"
 	 */
 	public int getPopulation(){
 		return population;
@@ -346,7 +343,6 @@ public class DNFTree implements Serializable {
 	
 	/**
 	 * Gives the inputFilePath
-	 * @uml.property  name="inputFilePath"
 	 */
 	public String getInputFilePath(){
 		return inputFilePath;
@@ -356,7 +352,6 @@ public class DNFTree implements Serializable {
 	
 	/**
 	 * Sets the number of the population this tree is in.
-	 * @uml.property  name="population"
 	 */
 	public void setPopulation(int population){
 		this.population = population;
@@ -933,9 +928,6 @@ public class DNFTree implements Serializable {
 	
 	/**
 	 * Overrides the standard function to provide more information about the structure of the tree.
-	 * & means AndNode
-	 * | means OrNode
-	 * ; means end of childrenlist
 	 * value gives the value of constant nodes
 	 * x_1 gives the status of an input node
 	 * (x_4=2), (x_5!=3) gives the status of a compare node

@@ -1,9 +1,17 @@
 plugins {
-    id 'java'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
+    id 'java-library'
+    id 'maven-publish'
+    id 'signing'
 }
 
-group 'org.example'
-version '1.0-SNAPSHOT'
+group 'io.github.italbytz'
+version '0.3.0'
+
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
 
 repositories {
     mavenCentral()
@@ -18,6 +26,71 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 }
 
+tasks.register('uberJar', Jar) {
+    archiveClassifier = 'uber'
+
+    from sourceSets.main.output
+
+    dependsOn configurations.runtimeClasspath
+    from {
+        configurations.runtimeClasspath.findAll { it.name.endsWith('jar')}.collect { zipTree(it)}
+    } {
+        exclude "META-INF/*.SF"
+        exclude "META-INF/*.DSA"
+        exclude "META-INF/*.RSA"
+        exclude "META-INF/INDEX.LIST"
+    }
+}
+
 test {
     useJUnitPlatform()
+}
+
+publishing {
+
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            pom {
+                name = 'freak-rinterface'
+                description = 'R interface for the Free Evolutionary Algorithm Toolkit'
+                url = 'https://github.com/Italbytz/mvn-freak-rinterface'
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        name = 'Robin Nunkesser'
+                        email = 'robin.nunkesser@hshl.de'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://github.com/Italbytz/mvn-freak-rinterface.git'
+                    developerConnection = 'scm:git:ssh://github.com/Italbytz/mvn-freak-rinterface.git'
+                    url = 'https://github.com/Italbytz/mvn-freak-rinterface.git'
+                }
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            name="oss"
+            def releasesRepoUrl = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+            def snapshotsRepoUrl = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+            credentials {
+                username = ossrhUsername
+                password = ossrhPassword
+            }
+        }
+    }
+
+}
+
+signing {
+    sign(publishing.publications)
 }

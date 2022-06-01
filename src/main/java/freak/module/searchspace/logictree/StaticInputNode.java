@@ -21,8 +21,8 @@ public class StaticInputNode implements AtomicNode, Serializable {
 	
 	/**
 	 * Creates a new inputNode with the given variable number num. 
-	 * If num is < 0, the variable number is set to -1.
-	 * @num number of input variable, must be >= 0
+	 * If num is less than  0, the variable number is set to -1.
+	 * @param num number of input variable, must be greater than or equal to 0
 	 */
 	public StaticInputNode(int num){
 		if (num>=0) {

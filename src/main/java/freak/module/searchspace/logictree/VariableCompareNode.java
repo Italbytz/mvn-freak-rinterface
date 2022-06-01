@@ -32,11 +32,11 @@ public class VariableCompareNode implements OperatorNode, Serializable {
 	/**
 	 * Creates a new compareNode with given children.
 	 * The last three parameters specify which operators are allowed in the evaluation.
-	 * @param maxConstant Maximum value for the constant node
-	 * @param numVariables Number of input variables
-	 * @param less    if true, this compare Node interprets in < cn as true 
-	 * @param equal if true, this compare Node interprets in = cn as true
-	 * @param greater if true, this compare Node interprets in > cn as true
+	 * @param cn Maximum value for the constant node
+	 * @param in Number of input variables
+	 * @param less    if true, this compare Node interprets in less than cn as true
+	 * @param equal if true, this compare Node interprets in equal to cn as true
+	 * @param greater if true, this compare Node interprets in greater than cn as true
 	 */
 	public VariableCompareNode(StaticConstantNode cn, StaticInputNode in, boolean less, boolean equal, boolean greater){
 		constant = cn;

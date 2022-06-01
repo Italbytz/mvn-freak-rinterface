@@ -111,7 +111,7 @@ public class AndNode extends MultipleOperatorNode implements Serializable{
 	
 	/**
 	 * Overrides the standard function to provide more information about the structure of this andNode.
-	 * String starts with "&", then gives the description of all children and ends with ";".
+	 * String starts with AND, then gives the description of all children and ends with ";".
 	 */
 	public String toString(){
 		String rueckgabe = (children.size()==1)?"":"(";

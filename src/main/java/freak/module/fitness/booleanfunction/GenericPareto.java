@@ -512,7 +512,6 @@ public class GenericPareto extends AbstractStaticMultiObjectiveFitnessFunction i
 	}
 	/**
 	 * @return  the dimensionOfObjectiveSpace
-	 * @uml.property  name="dimensionOfObjectiveSpace"
 	 */
 	public int getDimensionOfObjectiveSpace() {
 		return dimensionOfObjectiveSpace;

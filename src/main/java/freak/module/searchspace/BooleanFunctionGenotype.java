@@ -93,7 +93,6 @@ public class BooleanFunctionGenotype extends Genotype implements Serializable{
 	
 	/**
 	 * @return  the inputFilePath
-	 * @uml.property  name="inputFilePath"
 	 */
 	public String getInputFilePath(){
 		return inputFilePath;
@@ -101,7 +100,6 @@ public class BooleanFunctionGenotype extends Genotype implements Serializable{
 	
 	/**
 	 * @return  the schedule
-	 * @uml.property  name="schedule"
 	 */
 	public ScheduleInterface getSchedule(){
 		return schedule;
@@ -340,7 +338,6 @@ public class BooleanFunctionGenotype extends Genotype implements Serializable{
 
 	/**
 	 * @return  the dnfbaum
-	 * @uml.property  name="dnfbaum"
 	 */
 	public DNFTree getDnfbaum() {
 		return dnfbaum;

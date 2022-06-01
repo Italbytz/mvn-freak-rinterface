@@ -22,7 +22,7 @@ public class VariableInputNode implements AtomicNode, Serializable {
 	/**
 	 * Creates a new inputNode with a random input variable. 
 	 * The number of the variable is chosen between 1 and numVariables (inclusively).
-	 * If numVariables is <= 0, the inputNode is set to -1.
+	 * If numVariables is less than or equal to 0, the inputNode is set to -1.
 	 * @param numVariables Number of input variables
 	 */
 	public VariableInputNode(int numVariables){
@@ -38,8 +38,8 @@ public class VariableInputNode implements AtomicNode, Serializable {
 	
 	/**
 	 * Creates a new inputNode with the given variable number num. 
-	 * If numVariables is <= 0, the variable number is set to -1.
-	 * @num number of input variable, must be in 0..numVariables-1, elsewise its set randomly.
+	 * If numVariables is less than or equal to 0, the variable number is set to -1.
+	 * @param num number of input variable, must be in 0..numVariables-1, elsewise its set randomly.
 	 * @param numVariables Number of input variables
 	 */
 	public VariableInputNode(int numVariables, int num){

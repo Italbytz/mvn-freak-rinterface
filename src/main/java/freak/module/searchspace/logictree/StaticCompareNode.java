@@ -40,9 +40,9 @@ public class StaticCompareNode implements OperatorNode, Serializable {
 	 * BitSet saying which rows are fullfilled.
 	 * @param cn      constant child of this compareNode
 	 * @param in      input child of this compareNode
-	 * @param less    if true, this compare Node interprets in < cn as true
-	 * @param equal   if true, this compare Node interprets in = cn as true
-	 * @param greater if true, this compare Node interprets in > cn as true
+	 * @param less    if true, this compare Node interprets in less than cn as true
+	 * @param equal   if true, this compare Node interprets in equal to  cn as true
+	 * @param greater if true, this compare Node interprets in greater than cn as true
 	 * @param numRows number of rows in the input table
 	 * @param rows    input table
 	 */
@@ -62,9 +62,9 @@ public class StaticCompareNode implements OperatorNode, Serializable {
 	 * The BitSet says which rows are fullfilled by this node.
 	 * @param cn      constant child of this compareNode
 	 * @param in      input child of this compareNode
-	 * @param less    if true, this compare Node interprets in < cn as true
-	 * @param equal   if true, this compare Node interprets in = cn as true
-	 * @param greater if true, this compare Node interprets in > cn as true
+	 * @param less    if true, this compare Node interprets in less than cn as true
+	 * @param equal   if true, this compare Node interprets in equal to cn as true
+	 * @param greater if true, this compare Node interprets in greater than cn as true
 	 * @param fullf   saying which rows are fullfiled by this node
 	 */
 	public StaticCompareNode(StaticConstantNode cn, StaticInputNode in, boolean less,

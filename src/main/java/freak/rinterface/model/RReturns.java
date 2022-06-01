@@ -307,7 +307,7 @@ public static int[] getBestBitSet() {
 	return bestBitSet;
 }
 /**
- * @param bestBitSet the bestBitSet to set
+ * @param bestBitSetOriginal the bestBitSet to set
  */
 public static void setBestBitSet(BitSet bestBitSetOriginal,int length) {
 	int[] bestBitSet = new int[length];
@@ -322,7 +322,7 @@ public static int[] getResultBitSet() {
 	return resultBitSet;
 }
 /**
- * @param resultBitSet the resultBitSet to set
+ * @param resultBitSetOriginal the resultBitSet to set
  */
 public static void setResultBitSet(BitSet resultBitSetOriginal,int length) {
 	int[] resultBitSet = new int[length];
