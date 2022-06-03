@@ -6,7 +6,7 @@ plugins {
 }
 
 group 'io.github.italbytz'
-version '0.3.0'
+version '0.4.0'
 
 java {
     withJavadocJar()
@@ -18,9 +18,8 @@ repositories {
 }
 
 dependencies {
-    implementation 'io.github.italbytz:freak-core:0.3.11'
-    implementation 'io.github.italbytz:freak-modules:0.2.12'
-    implementation 'io.github.italbytz:freak-core-graph:0.2.2'
+    implementation 'io.github.italbytz:freak-core:0.4.2'
+    implementation 'io.github.italbytz:freak-modules:0.4.0'
     implementation 'org.ostermiller:utils:1.07.00'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
