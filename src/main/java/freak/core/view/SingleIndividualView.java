@@ -113,15 +113,13 @@ public abstract class SingleIndividualView extends AbstractView implements Freak
 	
 	/**
 	 * @return  the displayStrategy
-	 * @uml.property  name="displayStrategy"
 	 */
 	public int getDisplayStrategy() {
 		return displayStrategy;
 	}
 
 	/**
-	 * @param displayStrategy  the displayStrategy to set
-	 * @uml.property  name="displayStrategy"
+	 * @param i  the displayStrategy to set
 	 */
 	public void setDisplayStrategy(int i) {
 		displayStrategy = i;

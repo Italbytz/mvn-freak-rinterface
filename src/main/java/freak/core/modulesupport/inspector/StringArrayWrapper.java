@@ -28,7 +28,6 @@ public class StringArrayWrapper implements Serializable {
 
 	/**
 	 * @return  the stringArray
-	 * @uml.property  name="stringArray"
 	 */
 	public String[] getStringArray() {
 		return stringArray;
