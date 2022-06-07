@@ -102,8 +102,13 @@ public class LogRegInterface implements StateListener {
             //			runControlFromScratch.request(new Actions.StartAction());
             // runControlFromCopying.request(new Actions.StartAction());
         }
-        while ((launchedFromR) && (!terminated))
-            ;
+        while ((launchedFromR) && (!terminated)) {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                // inentionally do nothing
+            }
+        }
     }
 
     public Schedule testScheduleCopying(Schedule aSchedule) {

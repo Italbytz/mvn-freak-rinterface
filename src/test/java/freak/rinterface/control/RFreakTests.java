@@ -29,7 +29,7 @@ public class RFreakTests {
         RDoubleMatrix stackloss = new RDoubleMatrix(values, dim);
         PointSet.setPointsSetFromR(true);
         ScheduleInterface
-                schedule = ScheduleConfigurator.getLTSSchedule(stackloss, 0, false, 1, 10000, 0, 0);
+                schedule = ScheduleConfigurator.getLTSSchedule(stackloss, 0, false, 1, 100000, 0, 0);
         LogRegInterface.rSetSchedule(schedule);
         RFreak.rMain();
         SDataFrame returnedFrame = RReturns.getDataFrame();
@@ -51,7 +51,7 @@ public class RFreakTests {
         Data.setTrainingData(trainingData);
         Data.setRData(trainingData);
         Data.setRMode();
-        ScheduleConfigurator.setInteractionR(1,1000,"test.dot",10,0.1);
+        ScheduleConfigurator.setInteractionR(1,100000,"test.dot",10,0.1);
         ScheduleInterface schedule = ScheduleConfigurator.getCurrentSchedule();
         LogRegInterface.rSetSchedule(schedule);
         RFreak.rMain();
@@ -69,7 +69,7 @@ public class RFreakTests {
         Data.setTrainingData(trainingData);
         Data.setRData(trainingData);
         Data.setRMode();
-        ScheduleConfigurator.setDiscriminationR(1,10000);
+        ScheduleConfigurator.setDiscriminationR(1,100000);
         ScheduleInterface schedule = ScheduleConfigurator.getCurrentSchedule();
         LogRegInterface.rSetSchedule(schedule);
         RFreak.rMain();

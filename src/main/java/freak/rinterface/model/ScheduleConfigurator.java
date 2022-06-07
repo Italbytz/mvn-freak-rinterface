@@ -98,7 +98,7 @@ public class ScheduleConfigurator {
         /*ScheduleDependencyChecker scheduleDependencyChecker = new ScheduleDependencyChecker(null);
         scheduleDependencyChecker.setSchedule(schedule);*/
 
-        Module m;
+        freak.core.modulesupport.Module m;
         try {
             // Suchraum
             m = new PointSet(schedule);
@@ -347,7 +347,7 @@ public class ScheduleConfigurator {
         /*ScheduleDependencyChecker scheduleDependencyChecker = new ScheduleDependencyChecker(null);
         scheduleDependencyChecker.setSchedule(schedule);*/
 
-        Module m;
+        freak.core.modulesupport.Module m;
         try {
             // Suchraum
             m = new freak.module.searchspace.BooleanFunction(schedule);
@@ -474,7 +474,7 @@ public class ScheduleConfigurator {
     public static void setInteraction(String path, int runs, int generations, String graphFile, int occurences,
                                       double ratio, String saveTo) {
         createSchedule(path, runs, generations);
-        Module m;
+        freak.core.modulesupport.Module m;
         try {
             currentSchedule.setFitnessFunction(null);
             // Fitnessfunktion
@@ -570,7 +570,7 @@ public class ScheduleConfigurator {
     public static void setDiscrimination(String path, int runs, int generations, String testDataPath, String saveTo,
                                          int sizePruning, boolean stoppingCriterion, String graphFile) {
         createSchedule(path, runs, generations, stoppingCriterion, graphFile);
-        Module m;
+        freak.core.modulesupport.Module m;
         try {
             currentSchedule.setFitnessFunction(null);
             // Fitnessfunktion
