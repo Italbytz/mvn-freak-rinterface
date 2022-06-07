@@ -13,7 +13,6 @@ import freak.core.control.ScheduleInterface;
 import freak.core.fitness.FitnessFunction;
 import freak.core.graph.FreakGraphModel;
 import freak.core.graph.Initialization;
-import freak.core.graph.OperatorGraphFile;
 import freak.core.mapper.Mapper;
 import freak.core.modulesupport.*;
 import freak.core.observer.Observer;
@@ -34,6 +33,8 @@ import freak.module.stoppingcriterion.Duration;
 import freak.module.stoppingcriterion.GenerationCount;
 import freak.module.stoppingcriterion.NoNewIndividualForManyGenerations;
 import freak.module.stoppingcriterion.PredictingModelFound;
+import freak.module.support.OperatorGraphCollector;
+import freak.module.support.OperatorGraphFile;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -261,7 +262,7 @@ public class ScheduleConfigurator {
                     String[] classpaths = ClassCollector.getClassPaths();
 
                     for (String path:classpaths) {
-                        if (path.contains("freak-core-graph")) {
+                        if (path.contains("freak-modules")) {
                             JarFile jf = new JarFile(path);
                             ogFile = OperatorGraphFile.read(jf.getInputStream(jf.getJarEntry(graphs[0].getClassName())));
                         }
@@ -415,7 +416,7 @@ public class ScheduleConfigurator {
                     String[] classpaths = ClassCollector.getClassPaths();
 
                     for (String jpath:classpaths) {
-                        if (jpath.contains("freak-core-graph")) {
+                        if (jpath.contains("freak-modules")) {
                             JarFile jf = new JarFile(jpath);
                             ogFile = OperatorGraphFile.read(jf.getInputStream(jf.getJarEntry(graphs[0].getClassName())));
                         }

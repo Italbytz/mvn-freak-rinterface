@@ -11,7 +11,6 @@ import freak.core.control.Actions.Action;
 import freak.core.fitness.FitnessFunction;
 import freak.core.graph.FreakGraphModel;
 import freak.core.graph.Initialization;
-import freak.core.graph.OperatorGraphFile;
 import freak.core.modulesupport.Module;
 import freak.core.modulesupport.UnsupportedEnvironmentException;
 import freak.core.observer.Observer;
@@ -23,6 +22,7 @@ import freak.core.stoppingcriterion.StoppingCriterion;
 import freak.module.observer.ResultObserver;
 import freak.module.postprocessor.booleanfunction.Count;
 import freak.module.stoppingcriterion.GenerationCount;
+import freak.module.support.OperatorGraphFile;
 import freak.rinterface.model.RReturns;
 
 import java.io.*;
